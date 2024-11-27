@@ -1,9 +1,3 @@
-If the section about starting the server in a separate thread and running the integration test is already included, we can focus specifically on explaining how the **client library works** and **how to run the integration test**, without repeating the threading setup or server startup process. Here's a concise explanation:
-
----
-
-## **How the Client Library Works**
-
 The `VideoTranslationClient` is a Python client library that polls a video translation server's `/status` endpoint to track the progress of a job. Its design emphasizes efficiency and reliability through:
 
 1. **Polling Logic**:
