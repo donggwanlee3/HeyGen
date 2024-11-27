@@ -47,5 +47,3 @@ The `VideoTranslationClient` is a Python client library that polls a video trans
 
 - **How the Client Library Works**: Efficiently polls the server using exponential backoff and configurable parameters while logging each step.
 - **How to Run the Integration Test**: Simply run `python integration_test.py` to test the client-server interaction, ensuring the system behaves as expected under real-world conditions.
-
-This concise explanation avoids duplicating the setup and focuses on the specific behaviors and usage of the client library and integration test.
