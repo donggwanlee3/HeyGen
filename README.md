@@ -1,7 +1,7 @@
 The `VideoTranslationClient` is a Python client library that polls a video translation server's `/status` endpoint to track the progress of a job. Its design emphasizes efficiency and reliability through:
 
 1. **Polling Logic**:
-   - The client sends repeated requests to the server until it gets a final response (`"completed"` or `"error"`) or the timeout is reached.
+   - The client sends repeated requests to the server until it gets a final response (`"completed"` or `"error"`), the timeout is reached, or it exceeds max_retries.
    - Between retries, it waits using exponential backoff to minimize unnecessary server load.
 
 2. **Configurable Parameters**:

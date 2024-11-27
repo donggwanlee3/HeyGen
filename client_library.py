@@ -43,7 +43,8 @@ class VideoTranslationClient:
                     logging.info(f"Sleeping for {sleep_time}s before retry #{retries}. Total elapsed time = {elapsed_time}s")
                     time.sleep(sleep_time)  # Sleep for the backoff duration
                     elapsed_time += sleep_time  # Increment elapsed time after sleeping
-
+                    if retries >= self.max_retries:
+                        raise Exception("Max retries reached")
             except requests.RequestException as e:
                 logging.error(f"Error during request on retry #{retries}: {e}")
                 retries += 1
