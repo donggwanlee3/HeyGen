@@ -21,6 +21,12 @@ The `VideoTranslationClient` is a Python client library that polls a video trans
 
 ## **How to Run the Integration Test**
 
+0. **Clone the Repository**;
+Begin by cloning the project repository from GitHub:
+   - ```bash
+    git clone https://github.com/donggwanlee3/HeyGen.git
+    cd HeyGen
+    ```
 1. **Run the Integration Test File**:
    - Execute the test by running:
      ```bash
