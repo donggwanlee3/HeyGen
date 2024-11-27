@@ -7,18 +7,113 @@ The `VideoTranslationClient` is a Python client library designed to interact wit
 ### **Setup**
 
 1. **Install Dependencies**
-   Ensure you have the following Python packages installed:
-   - `requests`
-   - `logging`
-
-   Use `pip` to install the required packages:
-   ```bash
-   pip install requests
-   ```
+ `pip install -r requirements.txt`
 
 2. **Run the Server**
-   Make sure your video translation server (e.g., Flask app) is running on the specified base URL. By default, it listens on `http://127.0.0.1:5000/status`.
+   Make sure your video translation server  is running on the specified base URL. By default, it listens on `http://127.0.0.1:5000/status`.
+### **How to Run the Server, Client Library, and Integration Test**
 
+To test the entire setup, including the server, client library, and integration test, follow these steps:
+
+---
+
+### **Run the Server**
+The server provides the `/status` endpoint for the client library to query. Make sure the server is running before starting the integration test or using the client library.
+
+1. **Start the Server**:
+   Run the following command in your terminal:
+   ```bash
+   python server.py
+   ```
+
+2. **Verify the Server is Running**:
+   Open your browser or use `curl` to test the `/status` endpoint:
+   ```bash
+   curl http://127.0.0.1:5000/status
+   ```
+   Expected output:
+   ```json
+   {"result": "pending"}
+   ```
+
+3. **Monitor the Server Logs**:
+   Check the terminal running `server.py` for logs to ensure it's functioning correctly.
+
+---
+
+### **Run the Client Library**
+The client library polls the server to get the job status. You can use it independently or in an integration test.
+
+1. **Write a Script to Use the Client Library**:
+   Save the following code in a file, for example, `client_script.py`:
+   ```python
+   from client_library import VideoTranslationClient
+
+   client = VideoTranslationClient(
+       base_url="http://127.0.0.1:5000",  # Server base URL
+       max_retries=10,
+       backoff_factor=2,
+       timeout=30
+   )
+
+   try:
+       status = client.get_status()
+       print(f"Final status: {status}")
+   except TimeoutError as e:
+       print(f"Timeout occurred: {e}")
+   except Exception as e:
+       print(f"An error occurred: {e}")
+   ```
+
+2. **Run the Script**:
+   ```bash
+   python client_script.py
+   ```
+
+3. **Check the Logs**:
+   Logs will appear in the terminal, providing detailed information about retries, status updates, and elapsed time.
+
+---
+
+### **Run the Integration Test**
+The integration test combines the server and client to simulate a real-world use case.
+
+2. **Run the Integration Test**:
+   Execute the test with:
+   ```bash
+   python integration_test.py
+   ```
+
+3. **Expected Output**:
+   The integration test will start the server, use the client library to poll for the job status, and display the final result. Example output:
+   ```
+   Integration Test: Final status from server: completed
+   Integration Test: Completed
+   ```
+
+---
+
+### **Final Notes**
+
+1. **Install Dependencies**:
+   Ensure all dependencies are installed before running any scripts:
+   ```bash
+   pip install -r requirements.txt
+   ```
+
+2. **Environment Isolation**:
+   Use a virtual environment for better dependency management:
+   ```bash
+   python3 -m venv venv
+   source venv/bin/activate
+   pip install -r requirements.txt
+   ```
+
+3. **Debugging**:
+   - Check server logs for any issues.
+   - Verify the `base_url` in the client library matches the running server’s URL.
+
+This guide ensures you can seamlessly run the server, client library, and integration test to verify the complete setup.
 ---
 
 ### **Using the Library**
